@@ -1,0 +1,9 @@
+<script>
+    alert("Regra de três: \na....b\nc.....x");
+    a=prompt("insira o valor de a: ");
+    b=prompt("insira o valor de b: ");
+    c=prompt("insira o valor de c: ");
+    res = (c*b)/a;
+    alert("x é igual a...");
+    alert(res);
+</script>
