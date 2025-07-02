@@ -1,0 +1,17 @@
+<script>
+
+var numeros = [];
+var soma = 0;
+
+for (var i = 0; i < 10; i++) {
+  var valor = prompt("Digite o número " + (i + 1) + ":");
+  valor = Number(valor); 
+  numeros.push(valor);     
+  soma = soma + valor;     
+}
+
+alert("A soma dos números digitados é: " + soma);
+
+
+
+</script>
