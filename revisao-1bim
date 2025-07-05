@@ -1,0 +1,18 @@
+<script>
+
+var saldoInicial = Number(prompt("Informe o saldo inicial da aplicação:"));
+var taxaMensal = Number(prompt("Informe a taxa de rendimento mensal em %:"));
+var totalMeses = Number(prompt("Informe a quantidade de meses da aplicação:"));
+var resultado = "";
+
+for (var mes = 1; mes <= totalMeses; mes++) {
+  var rendimento = saldoInicial * (taxaMensal / 100);
+  saldoInicial = saldoInicial + rendimento;
+  resultado += "No " + mes + "º mês a aplicação rendeu R$ " + rendimento.toFixed(2) +
+               " e o total aplicado passou a ser R$ " + saldoInicial.toFixed(2) + "\n";
+}
+
+resultado += "O saldo final da aplicação será de R$ " + saldoInicial.toFixed(2);
+alert(resultado);
+
+</script>
