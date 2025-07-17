@@ -1,0 +1,21 @@
+<h1 style="color: rgb(119, 33, 141);">Calculadora de Regras de 3</h1>
+
+<input type="number" id="a"> 
+----
+<input type="number" id="b">
+ <br>
+<input type="number" id="c">
+---- x <br>
+<input type="button" value="calcular x =" onclick="regra3()">
+
+<h1 id="res"></h1>
+
+
+<script>
+
+function regra3(){
+    let x =(a.value*b.value)/c.value
+    res.innerHTML = `x  = ${x}`
+    
+}
+</script>
