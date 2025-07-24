@@ -1,0 +1,16 @@
+<script>
+function somar() {
+var x = document.getElementById('n1').value 
+// var x = n1.value (tbm pode ser assim, que é bem mais simples)
+var y = document.getElementById('n2').value
+//var resultado = parseFloat(x) + parseFloat(y)
+// var resultado= x + y (não dá certo sem parseFloat ou parseInt, eles continuam como string, ou seja, texto)
+document.getElementById('res').innerHTML = resultado
+}
+</script>
+
+<input type="text" id="n1"><br>
+<input type="text" id="n2"><br>
+<input type="button" value="+" onClick="somar()">
+<br>
+<p id="res">Aguardando valores...</p>
