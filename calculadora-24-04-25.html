@@ -1,0 +1,58 @@
+<script>
+    function somar() { 
+    var x = n1.value 
+    var y = n2.value
+    var soma = parseFloat(x) + parseFloat(y)
+   document.getElementById('res').innerHTML = soma
+    }
+
+    function subtrair() { 
+    var x = n1.value 
+    var y = n2.value
+    var subtrair = parseFloat(x) - parseFloat(y)
+    document.getElementById('res').innerHTML = subtrair
+    }
+
+
+    function multiplicar() { 
+    var x = n1.value 
+    var y = n2.value
+    var multiplicar = parseFloat(x) * parseFloat(y)
+    document.getElementById('res').innerHTML = multiplicar
+    }
+
+    function dividir() { 
+    var x = n1.value 
+    var y = n2.value
+    var dividir= parseFloat(x) / parseFloat(y)
+    document.getElementById('res').innerHTML = dividir
+    }
+    function limpar() { 
+    n1.value= ""
+    n2.value= ""
+    }
+  
+
+    
+
+    </script>
+    
+   
+    <input type="text" id="n1"><br>
+    <input type="text" id="n2"><br>
+    <input type="button" id="soma" value="+" onClick="somar()">
+    <input type="button" id="sub" value="-" onClick="subtrair()">
+    <input type="button" id="mult" value="*" onClick="multiplicar()">
+    <input type="button" id="div" value="/" onClick="dividir()"><br>
+    <input type="button" value="limpar" onClick="limpar()"><br>
+    <p id="res">Aguardando valores...</p>
+       
+<script>
+soma.onclick= () => somar()
+sub.onclick= () => subtrair()
+mult.onclick= () => multiplicar()
+div.onclick= () => dividir()
+</script>
+    
+    
+    
