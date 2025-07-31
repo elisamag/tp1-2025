@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewimport" content="width=device=widht, initial-" >
+        <title> Aula 31/07/25-2</title>
+        
+<script>
+    
+    function mudaVisibilidade(elemento) {
+        const elementoHTML = document.getElementById(elemento)
+        if (elementoHTML.className == "mostra") {
+            elementoHTML.className = "esconde"
+        } else {
+            elementoHTML.className = "mostra"
+        }
+    }
+    function verificaVisibilidade(){
+        const elementoHTML = document.getElementById(elemento)
+        exibindo=document.querySelectorAll("mostra")
+        naoexibindo=document.querySelectorAll("esconde")
+
+        
+    }
+    
+
+</script>
+<style>
+    .mostra {
+        display:block;
+    }
+    .esconde {
+        display:none;
+    }
+</style>
+<ol>
+    <li onclick="mudaVisibilidade('listaTeste1')">Teste1</li>
+    <ul id="listaTeste1" class="mostra">
+        <li>bla</li>
+        <li>bla</li>
+        <li>bla</li>
+    </ul>
+    <li onclick="mudaVisibilidade('listaTeste2')">Teste2</li>
+    <ul id="listaTeste2" class="mostra">
+        <li>ble</li>
+        <li>ble</li>
+        <li>ble</li>
+    </ul>
+
+    <input type="button" id="botão" value="Mudar mudaVisibilidade" 
+    onClick="mudaVisibilidade(elemento)">
+    
+  
+</ol>
+</html>
