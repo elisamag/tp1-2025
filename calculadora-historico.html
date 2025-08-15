@@ -1,0 +1,73 @@
+<script>
+    let historico = [];
+
+    function somar() { 
+        var x = parseFloat(n1.value);
+        var y = parseFloat(n2.value);
+        var soma = x + y;
+        document.getElementById('res').innerHTML = `${x} + ${y} = ${soma}`;
+        adicionarHistorico(x, y, '+', soma);
+    }
+
+    function subtrair() { 
+        var x = parseFloat(n1.value);
+        var y = parseFloat(n2.value);
+        var subtrair = x - y;
+        document.getElementById('res').innerHTML = `${x} - ${y} = ${subtrair}`;
+        adicionarHistorico(x, y, '-', subtrair);
+    }
+
+    function multiplicar() { 
+        var x = parseFloat(n1.value);
+        var y = parseFloat(n2.value);
+        var multiplicar = x * y;
+        document.getElementById('res').innerHTML = `${x} * ${y} = ${multiplicar}`;
+        adicionarHistorico(x, y, '*', multiplicar);
+    }
+
+    function dividir() { 
+        var x = parseFloat(n1.value);
+        var y = parseFloat(n2.value);
+        var dividir = y !== 0 ? x / y : "Erro (divisão por zero)";
+        document.getElementById('res').innerHTML = `${x} / ${y} = ${dividir}`;
+        adicionarHistorico(x, y, '/', dividir);
+    }
+
+    function limpar() { 
+        n1.value = "";
+        n2.value = "";
+        res.innerHTML = "Insira dois valores para serem calculados";
+    }
+
+    function adicionarHistorico(op1, op2, operador, resultado) {
+        let operacao = { op1, op2, operador, resultado };
+        historico.push(operacao);
+        exibirHistorico();
+    }
+
+    function exibirHistorico() {
+        let area = document.getElementById('historico');
+        area.innerHTML = "<h3>Histórico:</h3>";
+        historico.forEach((op, index) => {
+            area.innerHTML += `${index + 1}: ${op.op1} ${op.operador} ${op.op2} = ${op.resultado} <br>`;
+        });
+    }
+</script>
+    
+<input type="text" id="n1"><br>
+<input type="text" id="n2"><br>
+<input type="button" id="soma" value="+" onClick="somar()">
+<input type="button" id="sub" value="-" onClick="subtrair()">
+<input type="button" id="mult" value="*" onClick="multiplicar()">
+<input type="button" id="div" value="/" onClick="dividir()"><br>
+<input type="button" value="limpar" onClick="limpar()"><br>
+
+<p id="res">Aguardando valores...</p>
+<div id="historico"></div>
+
+<script>
+    soma.onclick = () => somar();
+    sub.onclick = () => subtrair();
+    mult.onclick = () => multiplicar();
+    div.onclick = () => dividir();
+</script>
