@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Calculadora com Histórico (IndexedDB)</title>
+
+  <style>
+
+    body {
+
+      font-family: Arial;
+
+    }
+
+    #historico {
+
+      margin-top: 20px;
+
+    }
+
+    .linha-historico {
+
+      margin-bottom: 5px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+<h1>Calculadora Simples</h1>
+
+
+
+<input type="text" id="n1" placeholder="Número 1"><br>
+
+<input type="text" id="n2" placeholder="Número 2"><br>
+
+<input type="button" value="+" onclick="somanovoObj()">
+
+<input type="button" value="-" onclick="subtracao()">
+
+<input type="button" value="*" onclick="multiplicacao()">
+
+<input type="button" value="/" onclick="divisao()">
+
+<input type="button" value="Limpar" onclick="limpar()">
+
+<p id="r">Insira dois valores</p>
+
+
+
+<h2>Histórico de Operações:</h2>
+
+<div id="historico"></div>
+
+
+
+<script>
+
+  let db;
+
+
+
+  const request = indexedDB.open("calculadoraDB", 1);
+
+
+
+  request.onupgradeneeded = function (event) {
+
+    db = event.target.result;
+
+    const store = db.createObjectStore("operacoes", { autoIncrement: true });
+
+    store.createIndex("resultado", "resultado", { unique: false });
+
+  };
+
+
+
+  request.onsuccess = function (event) {
+
+    db = event.target.result;
+
+    console.log("Banco de dados carregado.");
+
+    mostrarHistorico(); // Carrega histórico ao abrir a página
+
+  };
+
+
+
+  request.onerror = function (event) {
+
+    console.error("Erro ao abrir o banco:", event.target.errorCode);
+
+  };
+
+
+
+  function salvarNoBanco(obj) {
+
+    const transacao = db.transaction(["operacoes"], "readwrite");
+
+    const store = transacao.objectStore("operacoes");
+
+    const request = store.add(obj);
+
+
+
+    request.onsuccess = () => {
+
+      console.log("Operação salva.");
+
+      adicionarAoHistorico(obj); // Mostra na tela
+
+    };
+
+
+
+    request.onerror = (e) => {
+
+      console.error("Erro ao salvar operação:", e.target.error);
+
+    };
+
+  }
+
+
+
+  function adicionarAoHistorico(obj) {
+
+    const historicoDiv = document.getElementById("historico");
+
+    const linha = document.createElement("div");
+
+    linha.className = "linha-historico";
+
+    linha.textContent = `${obj.op1} ${obj.operacao} ${obj.op2} = ${obj.resultado}`;
+
+    historicoDiv.appendChild(linha);
+
+  }
+
+
+
+  function mostrarHistorico() {
+
+    const transacao = db.transaction(["operacoes"], "readonly");
+
+    const store = transacao.objectStore("operacoes");
+
+    const request = store.openCursor();
+
+
+
+    const historicoDiv = document.getElementById("historico");
+
+    historicoDiv.innerHTML = ""; // Limpa antes de mostrar novamente
+
+
+
+    request.onsuccess = function (event) {
+
+      const cursor = event.target.result;
+
+      if (cursor) {
+
+        adicionarAoHistorico(cursor.value);
+
+        cursor.continue();
+
+      }
+
+    };
+
+  }
+
+
+
+  function criarOperacao(operador, operacaoFunc) {
+
+    const op1 = n1.value;
+
+    const op2 = n2.value;
+
+
+
+    if (op1 === "" || op2 === "") {
+
+      alert("Preencha os dois campos.");
+
+      return;
+
+    }
+
+
+
+    const resultado = operacaoFunc(parseFloat(op1), parseFloat(op2));
+
+    const obj = {
+
+      op1,
+
+      op2,
+
+      operacao: operador,
+
+      resultado
+
+    };
+
+
+
+    document.getElementById("r").innerHTML = `${op1} ${operador} ${op2} = ${resultado}`;
+
+    salvarNoBanco(obj);
+
+  }
+
+
+
+  function somanovoObj() {
+
+    criarOperacao("+", (a, b) => a + b);
+
+  }
+
+
+
+  function subtracao() {
+
+    criarOperacao("-", (a, b) => a - b);
+
+  }
+
+
+
+  function multiplicacao() {
+
+    criarOperacao("*", (a, b) => a * b);
+
+  }
+
+
+
+  function divisao() {
+
+    criarOperacao("/", (a, b) => {
+
+      if (b === 0) {
+
+        alert("Divisão por zero não permitida.");
+
+        return "Erro";
+
+      }
+
+      return a / b;
+
+    });
+
+  }
+
+
+
+  function limpar() {
+
+    n1.value = "";
+
+    n2.value = "";
+
+    r.innerHTML = "Insira dois valores";
+
+  }
+
+</script>
+
+
+
+</body>
+
+</html><!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Calculadora com Histórico (IndexedDB)</title>
+
+  <style>
+
+    body {
+
+      font-family: Arial;
+
+    }
+
+    #historico {
+
+      margin-top: 20px;
+
+    }
+
+    .linha-historico {
+
+      margin-bottom: 5px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+<h1>Calculadora Simples</h1>
+
+
+
+<input type="text" id="n1" placeholder="Número 1"><br>
+
+<input type="text" id="n2" placeholder="Número 2"><br>
+
+<input type="button" value="+" onclick="somanovoObj()">
+
+<input type="button" value="-" onclick="subtracao()">
+
+<input type="button" value="*" onclick="multiplicacao()">
+
+<input type="button" value="/" onclick="divisao()">
+
+<input type="button" value="Limpar" onclick="limpar()">
+
+<p id="r">Insira dois valores</p>
+
+
+
+<h2>Histórico de Operações:</h2>
+
+<div id="historico"></div>
+
+
+
+<script>
+
+  let db;
+
+
+
+  const request = indexedDB.open("calculadoraDB", 1);
+
+
+
+  request.onupgradeneeded = function (event) {
+
+    db = event.target.result;
+
+    const store = db.createObjectStore("operacoes", { autoIncrement: true });
+
+    store.createIndex("resultado", "resultado", { unique: false });
+
+  };
+
+
+
+  request.onsuccess = function (event) {
+
+    db = event.target.result;
+
+    console.log("Banco de dados carregado.");
+
+    mostrarHistorico(); // Carrega histórico ao abrir a página
+
+  };
+
+
+
+  request.onerror = function (event) {
+
+    console.error("Erro ao abrir o banco:", event.target.errorCode);
+
+  };
+
+
+
+  function salvarNoBanco(obj) {
+
+    const transacao = db.transaction(["operacoes"], "readwrite");
+
+    const store = transacao.objectStore("operacoes");
+
+    const request = store.add(obj);
+
+
+
+    request.onsuccess = () => {
+
+      console.log("Operação salva.");
+
+      adicionarAoHistorico(obj); // Mostra na tela
+
+    };
+
+
+
+    request.onerror = (e) => {
+
+      console.error("Erro ao salvar operação:", e.target.error);
+
+    };
+
+  }
+
+
+
+  function adicionarAoHistorico(obj) {
+
+    const historicoDiv = document.getElementById("historico");
+
+    const linha = document.createElement("div");
+
+    linha.className = "linha-historico";
+
+    linha.textContent = `${obj.op1} ${obj.operacao} ${obj.op2} = ${obj.resultado}`;
+
+    historicoDiv.appendChild(linha);
+
+  }
+
+
+
+  function mostrarHistorico() {
+
+    const transacao = db.transaction(["operacoes"], "readonly");
+
+    const store = transacao.objectStore("operacoes");
+
+    const request = store.openCursor();
+
+
+
+    const historicoDiv = document.getElementById("historico");
+
+    historicoDiv.innerHTML = ""; // Limpa antes de mostrar novamente
+
+
+
+    request.onsuccess = function (event) {
+
+      const cursor = event.target.result;
+
+      if (cursor) {
+
+        adicionarAoHistorico(cursor.value);
+
+        cursor.continue();
+
+      }
+
+    };
+
+  }
+
+
+
+  function criarOperacao(operador, operacaoFunc) {
+
+    const op1 = n1.value;
+
+    const op2 = n2.value;
+
+
+
+    if (op1 === "" || op2 === "") {
+
+      alert("Preencha os dois campos.");
+
+      return;
+
+    }
+
+
+
+    const resultado = operacaoFunc(parseFloat(op1), parseFloat(op2));
+
+    const obj = {
+
+      op1,
+
+      op2,
+
+      operacao: operador,
+
+      resultado
+
+    };
+
+
+
+    document.getElementById("r").innerHTML = `${op1} ${operador} ${op2} = ${resultado}`;
+
+    salvarNoBanco(obj);
+
+  }
+
+
+
+  function somanovoObj() {
+
+    criarOperacao("+", (a, b) => a + b);
+
+  }
+
+
+
+  function subtracao() {
+
+    criarOperacao("-", (a, b) => a - b);
+
+  }
+
+
+
+  function multiplicacao() {
+
+    criarOperacao("*", (a, b) => a * b);
+
+  }
+
+
+
+  function divisao() {
+
+    criarOperacao("/", (a, b) => {
+
+      if (b === 0) {
+
+        alert("Divisão por zero não permitida.");
+
+        return "Erro";
+
+      }
+
+      return a / b;
+
+    });
+
+  }
+
+
+
+  function limpar() {
+
+    n1.value = "";
+
+    n2.value = "";
+
+    r.innerHTML = "Insira dois valores";
+
+  }
+
+</script>
+
+
+
+</body>
+
+</html>
