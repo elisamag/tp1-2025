@@ -18,7 +18,7 @@ app.post('/operacao', (req, res) => {
 
     const mensagem = `${nome} ${sobrenome} de ${cidade}`;
 
-    res.render('saudacao', { mensagem });
+    res.render('retorno', { mensagem });
 });
 
 // iniciar servidor
